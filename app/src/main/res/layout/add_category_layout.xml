@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:background="@drawable/edit_background"
+    android:backgroundTint="@color/white"
+    android:layout_height="wrap_content"
+    android:padding="15dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        app:civ_border_width="2dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp"
+        app:civ_border_color="@android:color/darker_gray"
+        android:src="@drawable/placeholder"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Tap on image to select category image"
+        android:textSize="18sp"
+        android:fontFamily="@font/almendra_sc"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/categoryname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_margin="16dp"
+        android:background="@drawable/edit_background"
+        android:padding="8dp"
+        android:backgroundTint="@android:color/white"
+        android:elevation="2dp"
+        android:hint="Category Name"
+        android:inputType="textPersonName"/>
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/btn_background"
+        android:layout_marginTop="5dp"
+        android:text="A D D"
+        android:textSize="20sp"
+        android:fontFamily="@font/almendra_sc"/>
+</LinearLayout>
