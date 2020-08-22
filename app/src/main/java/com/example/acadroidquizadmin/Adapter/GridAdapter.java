@@ -62,7 +62,7 @@ public class GridAdapter extends BaseAdapter {
                 } else {
                     Intent intent = new Intent(parent.getContext(), AddQuestionActivity.class);
                     intent.putExtra("category", category);
-                    intent.putExtra("sets", position);
+                    intent.putExtra("setId", sets.get(position - 1));
                     parent.getContext().startActivity(intent);
                 }
             }
@@ -72,19 +72,18 @@ public class GridAdapter extends BaseAdapter {
             @Override
             public boolean onLongClick(View v) {
                 if (position != 0){
-                    listener.onLongClick(position);
+                    listener.onLongClick(position,sets.get(position-1));
                 }
                 return false;
             }
         });
-
         return view;
     }
 
     public interface GridListener {
         public void addSet();
 
-        void onLongClick(int setNo);
+        void onLongClick(int setNo, String setId);
     }
 
 }

@@ -1,13 +1,12 @@
 package com.example.acadroidquizadmin.Model;
 
 public class QuestionModel {
-    private String id, question, optiona, optionb, optionc, optiond, correctAns;
-    private int setNo;
+    public String id, question, optiona, optionb, optionc, optiond, correctAns, setId;
 
     public QuestionModel() {
     }
 
-    public QuestionModel(String id, String question, String optiona, String optionb, String optionc, String optiond, String correctAns, int setNo) {
+    public QuestionModel(String id, String question, String optiona, String optionb, String optionc, String optiond, String correctAns, String setId) {
         this.id = id;
         this.question = question;
         this.optiona = optiona;
@@ -15,70 +14,70 @@ public class QuestionModel {
         this.optionc = optionc;
         this.optiond = optiond;
         this.correctAns = correctAns;
-        this.setNo = setNo;
+        this.setId = setId;
     }
 
-    public String getId() {
+    public String getIdd() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setIdd(String id) {
         this.id = id;
     }
 
-    public String getQuestion() {
+    public String getQuestionn() {
         return question;
     }
 
-    public void setQuestion(String question) {
+    public void setQuestionn(String question) {
         this.question = question;
     }
 
-    public String getOptiona() {
+    public String getOptionaa() {
         return optiona;
     }
 
-    public void setOptiona(String optiona) {
+    public void setOptionaa(String optiona) {
         this.optiona = optiona;
     }
 
-    public String getOptionb() {
+    public String getOptionbb() {
         return optionb;
     }
 
-    public void setOptionb(String optionb) {
+    public void setOptionbb(String optionb) {
         this.optionb = optionb;
     }
 
-    public String getOptionc() {
+    public String getOptioncc() {
         return optionc;
     }
 
-    public void setOptionc(String optionc) {
+    public void setOptioncc(String optionc) {
         this.optionc = optionc;
     }
 
-    public String getOptiond() {
+    public String getOptiondd() {
         return optiond;
     }
 
-    public void setOptiond(String optiond) {
+    public void setOptiondd(String optiond) {
         this.optiond = optiond;
     }
 
-    public String getCorrectAns() {
+    public String getCorrectAnss() {
         return correctAns;
     }
 
-    public void setCorrectAns(String correctAns) {
+    public void setCorrectAnss(String correctAns) {
         this.correctAns = correctAns;
     }
 
-    public int getSetNo() {
-        return setNo;
+    public String getSetIdd() {
+        return setId;
     }
 
-    public void setSetNo(int setNo) {
-        this.setNo = setNo;
+    public void setSetIdd(String setId) {
+        this.setId = setId;
     }
 }

@@ -59,7 +59,7 @@ public class AddQuestionActivity extends AppCompatActivity {
     public static List<QuestionModel> list;
     Dialog loadingBar;
     String categoryNme;
-    int setNo;
+    String setId;
     TextView loadText;
     DatabaseReference myRef;
     public static final int CELL_COUNT = 6;
@@ -75,8 +75,8 @@ public class AddQuestionActivity extends AppCompatActivity {
         myRef = FirebaseDatabase.getInstance().getReference();
 
         categoryNme = getIntent().getStringExtra("category");
-        setNo = getIntent().getIntExtra("sets", 0);
-        getSupportActionBar().setTitle(categoryNme + "/set " + setNo);
+        setId = getIntent().getStringExtra("setId");
+        getSupportActionBar().setTitle(categoryNme);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         recyclerView = findViewById(R.id.recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -102,7 +102,7 @@ public class AddQuestionActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 loadingBar.show();
-                                myRef.child("Sets").child(categoryNme).child("questions").child(id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                myRef.child("Sets").child(setId).child(id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
@@ -124,7 +124,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         });
 
         recyclerView.setAdapter(adapter);
-        getDataFromDatabase(categoryNme, setNo);
+        getDataFromDatabase(categoryNme, setId);
 
 
         add_btn = findViewById(R.id.add_Btn);
@@ -183,12 +183,10 @@ public class AddQuestionActivity extends AppCompatActivity {
         }
     }
 
-    private void getDataFromDatabase(String categoryNme, final int setNo) {
+    private void getDataFromDatabase(String categoryNme, final String setId) {
         loadingBar.show();
         FirebaseDatabase.getInstance().getReference()
-                .child("Sets").child(categoryNme)
-                .child("questions").orderByChild("setNo")
-                .equalTo(setNo).addListenerForSingleValueEvent(new ValueEventListener() {
+                .child("Sets").child(setId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -200,7 +198,7 @@ public class AddQuestionActivity extends AppCompatActivity {
                     String optD = dataSnapshot.child("optiond").getValue().toString();
                     String correctAnswer = dataSnapshot.child("correctAns").getValue().toString();
 
-                    list.add(new QuestionModel(id, quest, optA, optB, optC, optD, correctAnswer, setNo));
+                    list.add(new QuestionModel(id, quest, optA, optB, optC, optD, correctAnswer, setId));
                 }
                 loadingBar.dismiss();
                 adapter.notifyDataSetChanged();
@@ -219,7 +217,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         //Add question to database code here
         Intent questionIntent = new Intent(this, TypeQuestionActivity.class);
         questionIntent.putExtra("category", categoryNme);
-        questionIntent.putExtra("sets", setNo);
+        questionIntent.putExtra("setId", setId);
         startActivity(questionIntent);
     }
 
@@ -269,12 +267,12 @@ public class AddQuestionActivity extends AppCompatActivity {
                                     questionMap.put("optionc", c);
                                     questionMap.put("optiond", d);
                                     questionMap.put("correctAns", correctAns);
-                                    questionMap.put("setNo", setNo);
+                                    questionMap.put("setId", setId);
 
                                     final String id = UUID.randomUUID().toString();
                                     parentMap.put(id, questionMap);
 
-                                    tempList.add(new QuestionModel(id, question, a, b, c, d, correctAns, setNo));
+                                    tempList.add(new QuestionModel(id, question, a, b, c, d, correctAns, setId));
                                 } else {
                                     final int finalR = r;
                                     runOnUiThread(new Runnable() {
@@ -306,8 +304,7 @@ public class AddQuestionActivity extends AppCompatActivity {
                             public void run() {
                                 loadText.setText("Uploading question");
                                 FirebaseDatabase.getInstance().getReference()
-                                        .child("Sets").child(categoryNme)
-                                        .child("questions").updateChildren(parentMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        .child("Sets").child(setId).updateChildren(parentMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {

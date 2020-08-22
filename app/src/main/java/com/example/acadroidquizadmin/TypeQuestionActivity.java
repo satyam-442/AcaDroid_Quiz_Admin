@@ -27,7 +27,7 @@ public class TypeQuestionActivity extends AppCompatActivity {
 
     Dialog loadingBar;
     String categoryNme, id;
-    int setNo;
+    String setId;
     private EditText question;
     private RadioGroup options;
     private LinearLayout answers;
@@ -44,9 +44,9 @@ public class TypeQuestionActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         categoryNme = getIntent().getStringExtra("category");
-        setNo = getIntent().getIntExtra("sets",-1);
+        setId = getIntent().getStringExtra("setId");
         position = getIntent().getIntExtra("position",-1);
-        if (setNo == -1 ){
+        if (setId == null ){
             finish();
             return;
         }
@@ -84,14 +84,14 @@ public class TypeQuestionActivity extends AppCompatActivity {
 
     private void setData() {
 
-        question.setText(questionModel.getQuestion());
-        ((EditText)answers.getChildAt(0)).setText(questionModel.getOptiona());
-        ((EditText)answers.getChildAt(1)).setText(questionModel.getOptionb());
-        ((EditText)answers.getChildAt(2)).setText(questionModel.getOptionc());
-        ((EditText)answers.getChildAt(3)).setText(questionModel.getOptiond());
+        question.setText(questionModel.getQuestionn());
+        ((EditText)answers.getChildAt(0)).setText(questionModel.getOptionaa());
+        ((EditText)answers.getChildAt(1)).setText(questionModel.getOptionbb());
+        ((EditText)answers.getChildAt(2)).setText(questionModel.getOptioncc());
+        ((EditText)answers.getChildAt(3)).setText(questionModel.getOptiondd());
 
         for (int i = 0; i < answers.getChildCount(); i++){
-            if ( ((EditText)answers.getChildAt(i)).getText().toString().equals(questionModel.getCorrectAns())){
+            if ( ((EditText)answers.getChildAt(i)).getText().toString().equals(questionModel.getCorrectAnss())){
                 RadioButton radioButton = (RadioButton) options.getChildAt(i);
                 radioButton.setChecked(true);
                 break;
@@ -126,16 +126,16 @@ public class TypeQuestionActivity extends AppCompatActivity {
         map.put("optionc",((EditText)answers.getChildAt(2)).getText().toString());
         map.put("optiond",((EditText)answers.getChildAt(3)).getText().toString());
         map.put("question",question.getText().toString());
-        map.put("setNo",setNo);
+        map.put("setId",setId);
 
         if (position != -1){
-            id = questionModel.getId();
+            id = questionModel.getIdd();
         }else {
             id = UUID.randomUUID().toString();
         }
 
         loadingBar.show();
-        FirebaseDatabase.getInstance().getReference().child("Sets").child(categoryNme).child("questions").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+        FirebaseDatabase.getInstance().getReference().child("Sets").child(setId).child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful())
@@ -147,7 +147,7 @@ public class TypeQuestionActivity extends AppCompatActivity {
                             map.get("optionc").toString(),
                             map.get("optiond").toString(),
                             map.get("correctAns").toString(),
-                            (int) map.get("setNo"));
+                            map.get("setId").toString());
 
                     if (position != -1){
                         AddQuestionActivity.list.set(position,questionModel);

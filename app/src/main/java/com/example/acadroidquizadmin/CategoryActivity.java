@@ -110,19 +110,12 @@ public class CategoryActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
 
-                                            setsRef.child(list.get(position).getNamee()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        list.remove(position);
-                                                        adapter.notifyDataSetChanged();
-                                                        Toast.makeText(CategoryActivity.this, list.get(position).getNamee() + "Category Deleted", Toast.LENGTH_SHORT).show();
-                                                    } else {
-                                                        Toast.makeText(CategoryActivity.this, "Error Occurred! :" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                                    }
-                                                    loadingBar.dismiss();
-                                                }
-                                            });
+                                            for (String setIds : list.get(position).getSetss()){
+                                                setsRef.child(setIds).removeValue();
+                                            }
+                                            list.remove(position);
+                                            adapter.notifyDataSetChanged();
+                                            loadingBar.dismiss();
                                         } else {
                                             Toast.makeText(CategoryActivity.this, "Error Occurred! :" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                             loadingBar.dismiss();
@@ -146,7 +139,9 @@ public class CategoryActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
                     List<String> sets = new ArrayList<>();
-                    for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()){
+                    for (DataSnapshot dataSnapshot2 : dataSnapshot1.child("Sets").getChildren()
+
+                    ){
                         sets.add(dataSnapshot2.getKey());
                     }
 
@@ -232,7 +227,7 @@ public class CategoryActivity extends AppCompatActivity {
         addCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (addCatName.getText().toString().isEmpty()) {
+                if (addCatName.getText().toString().isEmpty() || addCatName.getText() == null) {
                     addCatName.setError("Required");
                     return;
                 }
@@ -306,7 +301,7 @@ public class CategoryActivity extends AppCompatActivity {
     private void uploadCategoryName() {
         Map<String, Object> categoryMap = new HashMap<>();
         categoryMap.put("name", addCatName.getText().toString());
-        categoryMap.put("sets", 0);
+        categoryMap.put("Sets", 0);
         categoryMap.put("url", downloadUrl);
 
         final String id = UUID.randomUUID().toString();

@@ -33,7 +33,9 @@ public class SetsActivity extends AppCompatActivity {
     String categoryName;
     Dialog loadingBar;
     DatabaseReference myRef;
-    List<String> sets = CategoryActivity.list.get(getIntent().getIntExtra("position",0)).getSetss();
+    //List<String> sets = CategoryActivity.list.get(getIntent().getIntExtra("position", 0)).getSetss();
+    List<String> sets;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,8 @@ public class SetsActivity extends AppCompatActivity {
         loadingBar.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         loadingBar.setCancelable(false);
 
+        sets = CategoryActivity.list.get(getIntent().getIntExtra("position", 0)).getSetss();
+
         gridView = findViewById(R.id.grid_view);
         adapter = new GridAdapter(sets, getIntent().getStringExtra("title"), new GridAdapter.GridListener() {
             @Override
@@ -61,7 +65,7 @@ public class SetsActivity extends AppCompatActivity {
                 loadingBar.show();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 final String uid = UUID.randomUUID().toString();
-                database.getReference().child("Categories").child(getIntent().getStringExtra("key")).child("sets").child(uid).setValue("SET IT").addOnCompleteListener(new OnCompleteListener<Void>() {
+                database.getReference().child("Categories").child(getIntent().getStringExtra("key")).child("Sets").child(uid).setValue("SET ID").addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
@@ -80,7 +84,7 @@ public class SetsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onLongClick(final int setNo) {
+            public void onLongClick(final int setNo, final String setId) {
                 new AlertDialog.Builder(SetsActivity.this, R.style.Theme_AppCompat_Light_Dialog)
                         .setTitle("Delete Set " + setNo)
                         .setMessage("Press confirm to delete or cancel to be safe")
@@ -89,25 +93,28 @@ public class SetsActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 loadingBar.show();
                                 myRef
-                                        .child("Sets").child(categoryName)
-                                        .child("questions").orderByChild("setNo")
-                                        .equalTo(setNo).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        .child("Sets").child(setId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                            String id = dataSnapshot.getKey();
-                                            myRef.child("Sets").child(categoryName).child("questions").child(id).removeValue();
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            myRef.child("Categories").child(CategoryActivity.list.get(getIntent().getIntExtra("position", 0)).getKeyy()).child("Sets").child(setId).removeValue()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                sets.remove(setId);
+                                                                adapter.notifyDataSetChanged();
+                                                            } else {
+                                                                Toast.makeText(SetsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                            loadingBar.dismiss();
+                                                        }
+                                                    });
+                                        } else {
+                                            Toast.makeText(SetsActivity.this, "Error occurred!", Toast.LENGTH_SHORT).show();
+                                            loadingBar.dismiss();
                                         }
                                         loadingBar.dismiss();
-                                        adapter.sets--;
-                                        adapter.notifyDataSetChanged();
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-                                        Toast.makeText(SetsActivity.this, "Error occurred!", Toast.LENGTH_SHORT).show();
-                                        loadingBar.dismiss();
-                                        //7:07
                                     }
                                 });
                             }

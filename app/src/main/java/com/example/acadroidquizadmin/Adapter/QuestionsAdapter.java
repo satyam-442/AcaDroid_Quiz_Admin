@@ -38,8 +38,8 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String question = list.get(position).getQuestion();
-        String answer = list.get(position).getCorrectAns();
+        String question = list.get(position).getQuestionn();
+        String answer = list.get(position).getCorrectAnss();
 
         holder.setData(question,answer,position);
     }
@@ -68,18 +68,18 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
                 @Override
                 public void onClick(View v) {
                     //Intent editIntent = new Intent(itemView.getContext(), DemoActivity.class);
-                    Intent editIntent = new Intent(itemView.getContext(), TypeQuestionActivity.class);
+                    /*Intent editIntent = new Intent(itemView.getContext(), TypeQuestionActivity.class);
                     editIntent.putExtra("category",category);
-                    editIntent.putExtra("sets",list.get(position).getSetNo());
+                    editIntent.putExtra("setId",list.get(position).getSetIdd());
                     editIntent.putExtra("position",position);
-                    itemView.getContext().startActivity(editIntent);
+                    itemView.getContext().startActivity(editIntent);*/
                 }
             });
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    listener.onLongClick(position,list.get(position).getId());
+                    listener.onLongClick(position,list.get(position).getIdd());
                     return false;
                 }
             });
