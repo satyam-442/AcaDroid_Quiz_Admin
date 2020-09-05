@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void SendAdminToCategoryPage() {
-        Intent category = new Intent(this,CategoryActivity.class);
+        Intent category = new Intent(this,HomeActivity.class);
         startActivity(category);
         finish();
     }
