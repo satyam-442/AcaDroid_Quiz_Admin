@@ -7,9 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.example.acadroidquizadmin.Category.CategoryActivity;
+import com.example.acadroidquizadmin.Logical.LogicalActivity;
+import com.example.acadroidquizadmin.SpeedMath.SpeedmathActivity;
+
 public class HomeActivity extends AppCompatActivity {
 
-    RelativeLayout categoryRelative, speedMathRelative;
+    RelativeLayout categoryRelative, speedMathRelative, logicalRelative;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,15 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent setsActivity = new Intent(HomeActivity.this, SpeedmathActivity.class);
+                startActivity(setsActivity);
+            }
+        });
+
+        logicalRelative = findViewById(R.id.categoryLogical);
+        logicalRelative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent setsActivity = new Intent(HomeActivity.this, LogicalActivity.class);
                 startActivity(setsActivity);
             }
         });

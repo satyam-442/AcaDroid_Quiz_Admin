@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Category.AddQuestionActivity"
+    tools:context=".Logical.AddQuestionLogicalActivity"
     android:orientation="vertical"
     android:weightSum="10">
 
@@ -56,4 +56,5 @@
             android:textSize="17sp"
             android:textAllCaps="false"/>
     </LinearLayout>
+
 </LinearLayout>

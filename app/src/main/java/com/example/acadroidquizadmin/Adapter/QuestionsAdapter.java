@@ -1,6 +1,5 @@
 package com.example.acadroidquizadmin.Adapter;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.acadroidquizadmin.DemoActivity;
 import com.example.acadroidquizadmin.Model.QuestionModel;
 import com.example.acadroidquizadmin.R;
-import com.example.acadroidquizadmin.TypeQuestionActivity;
 
 import java.util.List;
 

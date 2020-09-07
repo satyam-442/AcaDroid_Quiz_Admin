@@ -1,4 +1,4 @@
-package com.example.acadroidquizadmin;
+package com.example.acadroidquizadmin.Category;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,9 +23,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.acadroidquizadmin.Adapter.CategoryAdapter;
+import com.example.acadroidquizadmin.MainActivity;
 import com.example.acadroidquizadmin.Model.CategoryModel;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+import com.example.acadroidquizadmin.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

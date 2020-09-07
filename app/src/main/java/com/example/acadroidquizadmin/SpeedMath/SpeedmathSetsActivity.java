@@ -1,4 +1,4 @@
-package com.example.acadroidquizadmin;
+package com.example.acadroidquizadmin.SpeedMath;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,8 +13,9 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.acadroidquizadmin.Adapter.GridAdapter;
 import com.example.acadroidquizadmin.Adapter.GridSpeedmathAdapter;
+import com.example.acadroidquizadmin.Category.CategoryActivity;
+import com.example.acadroidquizadmin.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;

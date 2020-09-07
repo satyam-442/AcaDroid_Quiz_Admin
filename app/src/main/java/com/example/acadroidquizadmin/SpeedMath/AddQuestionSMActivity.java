@@ -1,4 +1,4 @@
-package com.example.acadroidquizadmin;
+package com.example.acadroidquizadmin.SpeedMath;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +25,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.acadroidquizadmin.Adapter.QuestionsAdapter;
+import com.example.acadroidquizadmin.Category.TypeQuestionActivity;
 import com.example.acadroidquizadmin.Model.QuestionModel;
+import com.example.acadroidquizadmin.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -35,14 +37,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,7 +50,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class AddQuestionActivity extends AppCompatActivity {
+public class AddQuestionSMActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     Button add_btn, excel_btn;
@@ -67,7 +66,7 @@ public class AddQuestionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_question);
+        setContentView(R.layout.activity_add_question_s_m);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -95,7 +94,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         adapter = new QuestionsAdapter(list, categoryNme, new QuestionsAdapter.DeleteListener() {
             @Override
             public void onLongClick(final int position, final String id) {
-                new AlertDialog.Builder(AddQuestionActivity.this, R.style.Theme_AppCompat_Light_Dialog)
+                new AlertDialog.Builder(AddQuestionSMActivity.this, R.style.Theme_AppCompat_Light_Dialog)
                         .setTitle("Delete Question")
                         .setMessage("Press confirm to delete or cancel to be safe")
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
@@ -108,9 +107,9 @@ public class AddQuestionActivity extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                             list.remove(position);
                                             adapter.notifyItemRemoved(position);
-                                            Toast.makeText(AddQuestionActivity.this, "Question Deleted", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(AddQuestionSMActivity.this, "Question Deleted", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(AddQuestionActivity.this, "Error Occurred! :" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(AddQuestionSMActivity.this, "Error Occurred! :" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                         loadingBar.dismiss();
                                     }
@@ -139,10 +138,10 @@ public class AddQuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //ImportFromExcel();
-                if (ActivityCompat.checkSelfPermission(AddQuestionActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(AddQuestionSMActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     SelectFromExcel();
                 } else {
-                    ActivityCompat.requestPermissions(AddQuestionActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
+                    ActivityCompat.requestPermissions(AddQuestionSMActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
                 }
             }
         });
@@ -206,7 +205,7 @@ public class AddQuestionActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(AddQuestionActivity.this, "Error occurred!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddQuestionSMActivity.this, "Error occurred!", Toast.LENGTH_SHORT).show();
                 loadingBar.dismiss();
                 finish();
             }
@@ -215,7 +214,7 @@ public class AddQuestionActivity extends AppCompatActivity {
 
     private void AddQuestionIntent() {
         //Add question to database code here
-        Intent questionIntent = new Intent(this, TypeQuestionActivity.class);
+        Intent questionIntent = new Intent(this, TypeQuestionSMActivity.class);
         questionIntent.putExtra("category", categoryNme);
         questionIntent.putExtra("setId", setId);
         startActivity(questionIntent);
@@ -280,7 +279,7 @@ public class AddQuestionActivity extends AppCompatActivity {
                                         public void run() {
                                             loadText.setText("loading...");
                                             loadingBar.dismiss();
-                                            Toast.makeText(AddQuestionActivity.this, "Row no. " + (finalR + 1) + " has no correct option", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(AddQuestionSMActivity.this, "Row no. " + (finalR + 1) + " has no correct option", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                     return;
@@ -292,7 +291,7 @@ public class AddQuestionActivity extends AppCompatActivity {
                                     public void run() {
                                         loadText.setText("loading...");
                                         loadingBar.dismiss();
-                                        Toast.makeText(AddQuestionActivity.this, "Row no. " + (finalR1 + 1) + " has incorrect data", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(AddQuestionSMActivity.this, "Row no. " + (finalR1 + 1) + " has incorrect data", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                                 return;
@@ -312,7 +311,7 @@ public class AddQuestionActivity extends AppCompatActivity {
                                             adapter.notifyDataSetChanged();
                                         } else {
                                             loadText.setText("loading");
-                                            Toast.makeText(AddQuestionActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(AddQuestionSMActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();
                                         }
                                         loadingBar.dismiss();
                                     }
@@ -325,7 +324,7 @@ public class AddQuestionActivity extends AppCompatActivity {
                             public void run() {
                                 loadText.setText("loading");
                                 loadingBar.dismiss();
-                                Toast.makeText(AddQuestionActivity.this, "File is empty!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddQuestionSMActivity.this, "File is empty!", Toast.LENGTH_SHORT).show();
                             }
                         });
                         return;
@@ -338,7 +337,7 @@ public class AddQuestionActivity extends AppCompatActivity {
                         public void run() {
                             loadText.setText("loading");
                             loadingBar.dismiss();
-                            Toast.makeText(AddQuestionActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddQuestionSMActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 } catch (final IOException e) {
@@ -348,7 +347,7 @@ public class AddQuestionActivity extends AppCompatActivity {
                         public void run() {
                             loadText.setText("loading");
                             loadingBar.dismiss();
-                            Toast.makeText(AddQuestionActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddQuestionSMActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

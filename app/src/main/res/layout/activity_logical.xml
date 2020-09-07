@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Category.CategoryActivity"
+    tools:context=".Logical.LogicalActivity"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -21,18 +21,5 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-
-    <!--<com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:adSize="SMART_BANNER"
-        app:adUnitId="@string/bannerIdDemo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonTwo">
-
-    </com.google.android.gms.ads.AdView>-->
 
 </LinearLayout>

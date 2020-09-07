@@ -11,20 +11,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.acadroidquizadmin.Model.CategoryModel;
-import com.example.acadroidquizadmin.R;
 import com.example.acadroidquizadmin.Category.SetsActivity;
+import com.example.acadroidquizadmin.Logical.LogicalSetsActivity;
+import com.example.acadroidquizadmin.Model.CategoryModel;
+import com.example.acadroidquizadmin.Model.LogicalModel;
+import com.example.acadroidquizadmin.R;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.viewHolder> {
+public class LogicalAdapter extends RecyclerView.Adapter<LogicalAdapter.viewHolder> {
 
-    private List<CategoryModel> categoryList;
+    private List<LogicalModel> categoryList;
     DeleteListener deleteListener;
 
-    public CategoryAdapter(List<CategoryModel> categoryList, DeleteListener deleteListener) {
+    public LogicalAdapter(List<LogicalModel> categoryList, DeleteListener deleteListener) {
         this.categoryList = categoryList;
         this.deleteListener = deleteListener;
     }
@@ -66,7 +68,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.viewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent categories = new Intent(itemView.getContext(), SetsActivity.class);
+                    Intent categories = new Intent(itemView.getContext(), LogicalSetsActivity.class);
                     categories.putExtra("title", title);
                     categories.putExtra("position", position);
                     categories.putExtra("key", key);
@@ -86,5 +88,4 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.viewHo
     public interface DeleteListener{
         public void onDelete(String key, int position);
     }
-
 }

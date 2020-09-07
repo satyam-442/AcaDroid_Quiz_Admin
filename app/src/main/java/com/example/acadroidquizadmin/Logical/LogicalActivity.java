@@ -1,4 +1,4 @@
-package com.example.acadroidquizadmin;
+package com.example.acadroidquizadmin.Logical;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,9 +23,12 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.acadroidquizadmin.Adapter.CategoryAdapter;
-import com.example.acadroidquizadmin.Adapter.SpeedMathAdapter;
+import com.example.acadroidquizadmin.Adapter.LogicalAdapter;
+import com.example.acadroidquizadmin.Category.CategoryActivity;
+import com.example.acadroidquizadmin.MainActivity;
 import com.example.acadroidquizadmin.Model.CategoryModel;
-import com.example.acadroidquizadmin.Model.SpeedMathModel;
+import com.example.acadroidquizadmin.Model.LogicalModel;
+import com.example.acadroidquizadmin.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -47,11 +50,11 @@ import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class SpeedmathActivity extends AppCompatActivity {
+public class LogicalActivity extends AppCompatActivity {
 
     RecyclerView rv;
     DatabaseReference categories, setsRef;
-    public static List<SpeedMathModel> list;
+    public static List<LogicalModel> list;
     Dialog loadingBar, addCategoryDialog;
 
     //DIALOG FOR ADD CATEGORY
@@ -65,19 +68,19 @@ public class SpeedmathActivity extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference databaseRef;
-    SpeedMathAdapter adapter;
+    LogicalAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_speedmath);
+        setContentView(R.layout.activity_logical);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("SpeedMath");
+        getSupportActionBar().setTitle("Logical");
 
         //loadAds();
-        categories = FirebaseDatabase.getInstance().getReference().child("SpeedMath");
+        categories = FirebaseDatabase.getInstance().getReference().child("Logical");
         setsRef = FirebaseDatabase.getInstance().getReference().child("Sets");
 
         loadingBar = new Dialog(this);
@@ -95,11 +98,11 @@ public class SpeedmathActivity extends AppCompatActivity {
 
         list = new ArrayList<>();
 
-        adapter = new SpeedMathAdapter(list, new SpeedMathAdapter.DeleteListener() {
+        adapter = new LogicalAdapter(list, new LogicalAdapter.DeleteListener() {
             @Override
             public void onDelete(final String key, final int position) {
-                new AlertDialog.Builder(SpeedmathActivity.this, R.style.Theme_AppCompat_Light_Dialog)
-                        .setTitle("Delete SpeedMath Category")
+                new AlertDialog.Builder(LogicalActivity.this, R.style.Theme_AppCompat_Light_Dialog)
+                        .setTitle("Delete Category")
                         .setMessage("Press confirm to delete or cancel to be safe")
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                             @Override
@@ -109,7 +112,6 @@ public class SpeedmathActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-
                                             for (String setIds : list.get(position).getSetss()){
                                                 setsRef.child(setIds).removeValue();
                                             }
@@ -117,7 +119,7 @@ public class SpeedmathActivity extends AppCompatActivity {
                                             adapter.notifyDataSetChanged();
                                             loadingBar.dismiss();
                                         } else {
-                                            Toast.makeText(SpeedmathActivity.this, "Error Occurred! :" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(LogicalActivity.this, "Error Occurred! :" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                             loadingBar.dismiss();
                                         }
                                     }
@@ -145,7 +147,7 @@ public class SpeedmathActivity extends AppCompatActivity {
                         sets.add(dataSnapshot2.getKey());
                     }
 
-                    list.add(new SpeedMathModel(dataSnapshot1.child("name").getValue().toString(),
+                    list.add(new LogicalModel(dataSnapshot1.child("name").getValue().toString(),
                             dataSnapshot1.child("url").getValue().toString(),
                             dataSnapshot1.getKey(),
                             sets
@@ -157,7 +159,7 @@ public class SpeedmathActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(SpeedmathActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LogicalActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 loadingBar.dismiss();
                 finish();
             }
@@ -183,7 +185,7 @@ public class SpeedmathActivity extends AppCompatActivity {
             addCategoryDialog.show();
         }
         if (item.getItemId() == R.id.logout) {
-            new AlertDialog.Builder(SpeedmathActivity.this, R.style.Theme_AppCompat_Light_Dialog)
+            new AlertDialog.Builder(LogicalActivity.this, R.style.Theme_AppCompat_Light_Dialog)
                     .setTitle("Logout")
                     .setMessage("Are you sure you want to logout?")
                     .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
@@ -191,7 +193,7 @@ public class SpeedmathActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             loadingBar.show();
                             FirebaseAuth.getInstance().signOut();
-                            Intent main = new Intent(SpeedmathActivity.this, MainActivity.class);
+                            Intent main = new Intent(LogicalActivity.this, MainActivity.class);
                             startActivity(main);
                             finish();
                         }
@@ -231,14 +233,14 @@ public class SpeedmathActivity extends AppCompatActivity {
                     addCatName.setError("Required");
                     return;
                 }
-                for (SpeedMathModel model : list) {
+                for (LogicalModel model : list) {
                     if (addCatName.getText().toString().equals(model.getNamee())) {
                         addCatName.setError("Category Already Present!");
                         return;
                     }
                 }
                 if (image == null) {
-                    Toast.makeText(SpeedmathActivity.this, "Please select Image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LogicalActivity.this, "Please select Image", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 addCategoryDialog.dismiss();
@@ -263,7 +265,7 @@ public class SpeedmathActivity extends AppCompatActivity {
     private void uploadData() {
         loadingBar.show();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        final StorageReference imageRef = storageReference.child("SpeedMath").child(image.getLastPathSegment());
+        final StorageReference imageRef = storageReference.child("Logical").child(image.getLastPathSegment());
 
         UploadTask uploadTask = imageRef.putFile(image);
         Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -280,7 +282,7 @@ public class SpeedmathActivity extends AppCompatActivity {
                             uploadCategoryName();
                         } else {
                             loadingBar.dismiss();
-                            Toast.makeText(SpeedmathActivity.this, "Error occurred!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LogicalActivity.this, "Error occurred!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -291,7 +293,7 @@ public class SpeedmathActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
                 } else {
-                    Toast.makeText(SpeedmathActivity.this, "Error occurred!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LogicalActivity.this, "Error occurred!", Toast.LENGTH_SHORT).show();
                     loadingBar.dismiss();
                 }
             }
@@ -307,14 +309,14 @@ public class SpeedmathActivity extends AppCompatActivity {
         final String id = UUID.randomUUID().toString();
 
         database = FirebaseDatabase.getInstance();
-        database.getReference().child("SpeedMath").child(id).setValue(categoryMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+        database.getReference().child("Logical").child(id).setValue(categoryMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    list.add(new SpeedMathModel(addCatName.getText().toString(), downloadUrl, id, new ArrayList<String>()));
+                    list.add(new LogicalModel(addCatName.getText().toString(), downloadUrl, id, new ArrayList<String>()));
                     adapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(SpeedmathActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LogicalActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
                 }
                 loadingBar.dismiss();
             }

@@ -1,4 +1,4 @@
-package com.example.acadroidquizadmin;
+package com.example.acadroidquizadmin.Category;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,14 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.acadroidquizadmin.Adapter.GridAdapter;
-import com.example.acadroidquizadmin.Model.QuestionModel;
+import com.example.acadroidquizadmin.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,7 +32,6 @@ public class SetsActivity extends AppCompatActivity {
     DatabaseReference myRef;
     //List<String> sets = CategoryActivity.list.get(getIntent().getIntExtra("position", 0)).getSetss();
     List<String> sets;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

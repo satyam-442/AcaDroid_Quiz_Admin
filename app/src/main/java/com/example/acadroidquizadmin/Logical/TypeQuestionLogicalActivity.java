@@ -1,5 +1,5 @@
-package com.example.acadroidquizadmin;
-//18:18
+package com.example.acadroidquizadmin.Logical;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,7 +15,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.acadroidquizadmin.Category.AddQuestionActivity;
+import com.example.acadroidquizadmin.Category.TypeQuestionActivity;
 import com.example.acadroidquizadmin.Model.QuestionModel;
+import com.example.acadroidquizadmin.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class TypeQuestionActivity extends AppCompatActivity {
+public class TypeQuestionLogicalActivity extends AppCompatActivity {
 
     Dialog loadingBar;
     String categoryNme, id;
@@ -38,7 +41,7 @@ public class TypeQuestionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_type_question);
+        setContentView(R.layout.activity_type_question_logical);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,7 +55,7 @@ public class TypeQuestionActivity extends AppCompatActivity {
         }
 
         if (position != -1){
-            questionModel = AddQuestionActivity.list.get(position);
+            questionModel = AddQuestionLogicalActivity.list.get(position);
             setData();
         }
 
@@ -150,16 +153,16 @@ public class TypeQuestionActivity extends AppCompatActivity {
                             map.get("setId").toString());
 
                     if (position != -1){
-                        AddQuestionActivity.list.set(position,questionModel);
+                        AddQuestionLogicalActivity.list.set(position,questionModel);
                     }else {
-                        AddQuestionActivity.list.add(questionModel);
+                        AddQuestionLogicalActivity.list.add(questionModel);
                     }
                     finish();
-                    Toast.makeText(TypeQuestionActivity.this, "Uploaded successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TypeQuestionLogicalActivity.this, "Uploaded successfully", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    Toast.makeText(TypeQuestionActivity.this, "Error occurred!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TypeQuestionLogicalActivity.this, "Error occurred!", Toast.LENGTH_SHORT).show();
                 }
                 loadingBar.dismiss();
             }

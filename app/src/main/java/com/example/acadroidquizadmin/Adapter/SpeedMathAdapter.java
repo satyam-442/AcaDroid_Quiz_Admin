@@ -11,11 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.acadroidquizadmin.Model.CategoryModel;
 import com.example.acadroidquizadmin.Model.SpeedMathModel;
 import com.example.acadroidquizadmin.R;
-import com.example.acadroidquizadmin.SetsActivity;
-import com.example.acadroidquizadmin.SpeedmathSetsActivity;
+import com.example.acadroidquizadmin.SpeedMath.SpeedmathSetsActivity;
 
 import java.util.List;
 

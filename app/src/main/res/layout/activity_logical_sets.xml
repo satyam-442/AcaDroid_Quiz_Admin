@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Category.CategoryActivity"
+    tools:context=".Logical.LogicalSetsActivity"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -15,24 +15,24 @@
         android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-    <!--<com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:adSize="SMART_BANNER"
-        app:adUnitId="@string/bannerIdDemo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonTwo">
+        android:fontFamily="@font/cantora_one"
+        android:padding="15dp"
+        android:text="Add Set"
+        android:textColor="@color/red"
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
-    </com.google.android.gms.ads.AdView>-->
-
+    <GridView
+        android:id="@+id/grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:columnWidth="120dp"
+        android:numColumns="auto_fit"
+        android:gravity="center"
+        android:verticalSpacing="15dp"
+        android:horizontalSpacing="15dp"/>
 </LinearLayout>

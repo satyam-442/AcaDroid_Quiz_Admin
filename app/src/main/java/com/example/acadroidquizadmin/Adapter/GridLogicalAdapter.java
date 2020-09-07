@@ -7,18 +7,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.acadroidquizadmin.SpeedMath.AddQuestionSMActivity;
+import com.example.acadroidquizadmin.Category.AddQuestionActivity;
 import com.example.acadroidquizadmin.R;
 
 import java.util.List;
 
-public class GridSpeedmathAdapter extends BaseAdapter {
+public class GridLogicalAdapter extends BaseAdapter {
 
     public List<String> sets;
     String category;
     private GridListener listener;
 
-    public GridSpeedmathAdapter(List<String> sets, String category, GridListener listener) {
+    public GridLogicalAdapter(List<String> sets, String category, GridListener listener) {
         this.sets = sets;
         this.category = category;
         this.listener = listener;
@@ -60,7 +60,7 @@ public class GridSpeedmathAdapter extends BaseAdapter {
                     //addCode
                     listener.addSet();
                 } else {
-                    Intent intent = new Intent(parent.getContext(), AddQuestionSMActivity.class);
+                    Intent intent = new Intent(parent.getContext(), AddQuestionActivity.class);
                     intent.putExtra("category", category);
                     intent.putExtra("setId", sets.get(position - 1));
                     parent.getContext().startActivity(intent);

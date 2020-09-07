@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.acadroidquizadmin.AddQuestionActivity;
+import com.example.acadroidquizadmin.Category.AddQuestionActivity;
 import com.example.acadroidquizadmin.R;
 
 import java.util.List;
