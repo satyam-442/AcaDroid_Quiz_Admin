@@ -12,8 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Reasoning.ReasoningActivity"></activity>
-        <activity android:name=".Reasoning.AddQuestionReasoningActivity" />
         <activity android:name=".Logical.TypeQuestionLogicalActivity" />
         <activity android:name=".Logical.AddQuestionLogicalActivity" />
         <activity android:name=".Logical.LogicalSetsActivity" />
@@ -28,7 +26,8 @@
         <activity android:name=".Category.AddQuestionActivity" />
         <activity android:name=".Category.SetsActivity" />
         <activity android:name=".Category.CategoryActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
